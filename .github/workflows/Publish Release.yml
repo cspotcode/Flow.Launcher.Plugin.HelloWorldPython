@@ -14,11 +14,11 @@ jobs:
       python_ver: 3.11
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v7
+      - name: Set up Python ${{ env.python_ver }}
+        uses: actions/setup-python@v7
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ env.python_ver }}
       - name: get version
         id: version
         uses: notiz-dev/github-action-json-property@release
@@ -33,7 +33,7 @@ jobs:
           zip -r Flow.Launcher.Plugin.HelloWorldPython.zip . -x '*.git*'
       - name: Publish
         if: success()
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           files: 'Flow.Launcher.Plugin.HelloWorldPython.zip'
           tag_name: "v${{steps.version.outputs.prop}}"
