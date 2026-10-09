@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import sys,os
-parent_folder_path = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(parent_folder_path)
-sys.path.append(os.path.join(parent_folder_path, 'lib'))
-sys.path.append(os.path.join(parent_folder_path, 'plugin'))
+import sys
+from pathlib import Path
+
+# Put the bundled modules first, so they win over any versions installed in
+# the user's Python (when Flow is configured to use a system Python).
+plugindir = Path.absolute(Path(__file__).parent)
+paths = (".", "lib", "plugin")
+sys.path = [str(plugindir / p) for p in paths] + sys.path
 
 from flowlauncher import FlowLauncher
 import webbrowser
